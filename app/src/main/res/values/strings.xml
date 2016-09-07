@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">芒果热文</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="asking_net">正在请求数据,请稍候...</string>
+
+    <string name="refresh">刷新</string>
+    <string name="system_maintenance">系统维护中</string>
+    <string name="show_article">文章阅读</string>
+    <string name="title_activity_login">欢迎加入</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_phone">手机号码</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登陆或注册</string>
+    <string name="action_sign_in_short">登陆</string>
+    <string name="error_invalid_phone">无效手机号码</string>
+    <string name="error_invalid_password">密码过短</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">内容未填写</string>
+    <string name="permission_rationale">"需要获取用户权限"
+    </string>
+</resources>

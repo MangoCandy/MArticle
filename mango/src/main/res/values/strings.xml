@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Mango</string>
+    <string name="net_error">网络请求错误,请尝试重新请求。</string>
+</resources>

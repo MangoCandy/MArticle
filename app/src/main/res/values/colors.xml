@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e91e63</color>
+    <color name="colorPrimaryDark">#d71d5c</color>
+    <color name="colorAccent">#0d74c2</color>
+
+    <color name="weChatGreen">#27b742</color>
+</resources>

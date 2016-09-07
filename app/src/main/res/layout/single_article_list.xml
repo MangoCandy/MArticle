@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="10dp"
+    app:cardElevation="1dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/centerContainer"
+            android:layout_below="@+id/username"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_below="@+id/username"
+                android:scaleType="centerCrop"
+                android:id="@+id/articleImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:layout_toRightOf="@+id/articleImage"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"/>
+        </LinearLayout>
+        <TextView
+            android:textColor="#33a3ff"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/bottonContainer"
+            android:paddingTop="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/centerContainer"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="阅读次数:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/readcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

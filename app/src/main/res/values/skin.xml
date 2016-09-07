@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="pink" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">@color/pinkDark</item>
+    </style>
+    <style name="pink_TS" parent="AppTheme.windowTranslucentStatus">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">@color/pinkDark</item>
+    </style>
+    //蓝色
+    <style name="blue" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+    </style>
+    <style name="blue_TS" parent="AppTheme.windowTranslucentStatus">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+    </style>
+
+    <color name="pink">#e91e63</color>
+    <color name="pinkDark">#d71d5c</color>
+
+    <color name="blue">#0288d1</color>
+    <color name="blueDark">#0277bd</color>
+</resources>
