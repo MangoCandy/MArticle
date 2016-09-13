@@ -40,6 +40,9 @@ class Adapter_article_list : RecyclerView.Adapter<Adapter_article_list.MViewHold
             intent.putExtra(MWebActivity.URL,article.url)
             intent.putExtra(MWebActivity.TITLE,article.title)
             intent.putExtra(MWebActivity.ARTICLE,article)
+            intent.putExtra(MWebActivity.CONTENT_IMG,article.contentImg)
+            intent.putExtra(MWebActivity.POST_USER_NAME,article.userName)
+            intent.putExtra(MWebActivity.ARTICLE_ID,article!!.id)
             context!!.startActivity(intent)
         }
     }

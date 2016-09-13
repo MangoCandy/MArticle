@@ -16,10 +16,13 @@ import com.tencent.smtt.sdk.*
 import com.ydwj.ailejia.View.AskIf
 import kotlinx.android.synthetic.main.activity_mweb.*
 import mc.mangocandy.marticle.Base.MBaseActivity
+import mc.mangocandy.marticle.Beans.Favorite
 import mc.mangocandy.marticle.Beans.Table
 import mc.mangocandy.marticle.Beans.WeArticle
 import mc.mangocandy.marticle.R
 import mc.mangocandy.marticle.User.LoginActivity
+import mc.mangocandy.marticle.User.UserUtils
+import java.io.Serializable
 
 
 /**
@@ -31,18 +34,24 @@ class MWebActivity : MBaseActivity(){
 
 
     companion object{
+        var CONTENT_IMG = "contentimage"
         val URL = "url"  //网页地址
         val TITLE = "title" //toolbar显示的文字
         val MODULE_ID = "moduleid" //通过点击模块按钮点进来时需要传递的值
         val ARTICLE = "article"//文章对象
+        val ARTICLE_ID = "artID"
+        val POST_USER_NAME = "postUsername"
     }
 
     var url : String = ""
     var title : String = ""
     var module_id : String = ""
-    var article : WeArticle ?= null
+    var article_id = ""
+    var postUsername = ""
+//    var article : WeArticle ?= null
     var progressBar : ProgressBar ?= null
-    var artObject : AVObject ?= null //文章收藏储存对象
+    var contentImg = ""
+//    var artObject : AVObject ?= null //文章收藏储存对象
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,21 +60,20 @@ class MWebActivity : MBaseActivity(){
         init()
 
         url = if(intent.extras.getString(URL) == null) "" else intent.extras.getString(URL)
-        Log.e("asd",(intent.extras.getString(URL)).toString()+"asd")
         module_id = if(intent.extras.getString(MODULE_ID) == null) "" else intent.extras.getString(MODULE_ID)
         title =
                 if(intent.extras.getString(TITLE) != null) intent.extras.getString(TITLE)
                 else resources.getString(R.string.show_article)
-
-        article = intent.extras.getSerializable(ARTICLE) as WeArticle?//获取传入的文章对象
+        article_id = if(intent.extras.getString(ARTICLE_ID) == null) "" else intent.extras.getString(ARTICLE_ID)
+        contentImg = if(intent.extras.getString(CONTENT_IMG) == null) "" else intent.extras.getString(CONTENT_IMG)
+        postUsername = if(intent.extras.getString(POST_USER_NAME) == null) "" else intent.extras.getString(POST_USER_NAME)
+//        article =  if(intent.extras.getSerializable(ARTICLE) == null) null else (intent.extras.getSerializable(ARTICLE) as WeArticle)
 
         initView()
         checkFovorite(false)
         initData()
     }
-    fun init(){
 
-    }
     fun initView(){
         initWebView()
         toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -81,12 +89,16 @@ class MWebActivity : MBaseActivity(){
 
     fun checkFovorite(delete : Boolean){
         favorite.isSelected = false
-        AVQuery<AVObject>(Table.FAVORITE).whereEqualTo(WeArticle.URL,article!!.url).findInBackground(object : FindCallback<AVObject>(){
-            override fun done(ao: MutableList<AVObject>?, ex: AVException?) {
+        if(!isLogin()){return}//未登录跳过检查
+        AVQuery<Favorite>(Table.FAVORITE)
+                .whereEqualTo(Favorite.KEY,UserUtils.getUserID()+article_id)
+                .findInBackground(object : FindCallback<Favorite>(){
+            override fun done(ao: MutableList<Favorite>?, ex: AVException?) {
                 if(ex == null && ao!!.size>0){
                     favorite.isSelected = true
-                    artObject = ao[0]
+                    var artObject = ao[0]
                     Log.e("asd",ao.size.toString())
+                    Log.e("asd",ao[0].getTITLE())
                     if(delete){
                         artObject!!.deleteInBackground(object : DeleteCallback(){
                             override fun done(p0: AVException?) {
@@ -115,13 +127,15 @@ class MWebActivity : MBaseActivity(){
             checkFovorite(true)
 
         }else{
-            var ao = AVObject(Table.FAVORITE)
-            ao.put(WeArticle.URL,article!!.url)
-            ao.put(WeArticle.TITLE,article!!.title)
-            ao.put(WeArticle.CONTENTIMG,article!!.contentImg)
-            ao.put(WeArticle.USERNAME,article!!.userName)
-            ao.put(WeArticle.USERID,AVUser.getCurrentUser().objectId)
-            ao.saveInBackground(object : SaveCallback(){
+            var fav = Favorite()
+            fav.setArticleID(article_id)
+            fav.setContentIMG(contentImg)
+            fav.setUSERNAME(postUsername)
+            fav.setTITLE(title)
+            fav.setURL(url)
+            fav.setUserID(AVUser.getCurrentUser().objectId)
+            fav.setKey(UserUtils.getUserID()+article_id)
+            fav.saveInBackground(object : SaveCallback(){
                 override fun done(p0: AVException?) {
                     if(p0 == null){
                         toast("收藏成功")
@@ -135,8 +149,30 @@ class MWebActivity : MBaseActivity(){
                     }
                 }
             })
+//            var ao = AVObject(Table.FAVORITE)
+//            ao.put(WeArticle.URL,article!!.url)
+//            ao.put(WeArticle.TITLE,article!!.title)
+//            ao.put(WeArticle.CONTENTIMG,article!!.contentImg)
+//            ao.put(WeArticle.USERNAME,article!!.userName)
+//            ao.put(WeArticle.USERID,AVUser.getCurrentUser().objectId)
+//            ao.put(WeArticle.ARTICLE_ID,article!!.id)
+//            ao.saveInBackground(object : SaveCallback(){
+//                override fun done(p0: AVException?) {
+//                    if(p0 == null){
+//                        toast("收藏成功")
+//                        favorite.isSelected = true
+//
+//                    }
+//                    else
+//                    {
+//                        toast("收藏失败,请重试")
+//                        Log.e("asd",p0.message)
+//                    }
+//                }
+//            })
         }
     }
+
 
     val FILECHOOSER_RESULTCODE = 1
     val FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 2

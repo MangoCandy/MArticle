@@ -7,7 +7,7 @@
         android:layout_margin="20dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/icon_lanucher"/>
+        android:src="@drawable/icon_logo"/>
     <TextView
         android:textSize="15dp"
         android:textStyle="bold"

@@ -9,6 +9,6 @@ import mc.mangocandy.marticle.R
 open class TSActivity : MBaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.blue_TS)
+        setTheme(R.style.pink_TS)
     }
 }

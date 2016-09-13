@@ -12,6 +12,7 @@
         <android.support.v7.widget.CardView
             android:visibility="visible"
             app:cardCornerRadius="0dp"
+            app:cardElevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="300dp">
             <ImageView
@@ -30,6 +31,7 @@
 
 
         <android.support.v7.widget.CardView
+            android:translationZ="10dp"
             app:cardCornerRadius="0dp"
             app:cardBackgroundColor="#fff"
             android:layout_centerInParent="true"

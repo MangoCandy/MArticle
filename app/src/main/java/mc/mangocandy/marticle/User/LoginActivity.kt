@@ -8,6 +8,7 @@ import mc.mangocandy.marticle.Beans.Zhengze
 import mc.mangocandy.marticle.R
 
 import android.Manifest.permission.READ_CONTACTS
+import android.app.Activity
 import android.graphics.Color
 import android.util.Log
 import com.avos.avoscloud.*
@@ -66,6 +67,7 @@ class LoginActivity : TSActivity() {
                     }
                 }
                 else{
+                    setResult(Activity.RESULT_OK)
                     toast("欢迎回来,"+user!!.username)
                     MProgressDialog.dismiss()
                     finish()

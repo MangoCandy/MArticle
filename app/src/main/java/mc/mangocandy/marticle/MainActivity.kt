@@ -1,5 +1,6 @@
 package mc.mangocandy.marticle
 
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 
@@ -13,9 +14,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.avos.avoscloud.AVUser
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
 import com.ydwj.mangotools.MView.MProgressDialog
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +36,8 @@ import mc.mangocandy.marticle.ArticleList.Adapter_article_pager
 import mc.mangocandy.marticle.Base.MBaseActivity
 import mc.mangocandy.marticle.Beans.ArticleType
 import mc.mangocandy.marticle.Beans.Urls
+import mc.mangocandy.marticle.FavoriteArticle.Act_Favorite
+import mc.mangocandy.marticle.User.Act_userinfo
 import mc.mangocandy.marticle.User.LoginActivity
 import mc.mangocandy.marticle.User.UserUtils
 import org.json.JSONArray
@@ -85,14 +95,14 @@ class MainActivity : MBaseActivity(), NavigationView.OnNavigationItemSelectedLis
         var headimage = navigationView.getHeaderView(0).findViewById(R.id.headImage) as CircleImageView
         headimage.setOnClickListener {
             if(isLogin()){
-
+                startActivity(Act_userinfo::class.java)
             }else{
                 startActivity(LoginActivity::class.java)
             }
         }
         var username = navigationView.getHeaderView(0).findViewById(R.id.username) as TextView
         if(isLogin()){
-            Glide.with(context).load(UserUtils.getUserImage()).asGif().animate(R.anim.circle_s2b).into(headimage)
+            Glide.with(context).load(UserUtils.getUserImage()).error(R.drawable.icon_default_head).animate(R.anim.circle_s2b).into(headimage)
             username.text = UserUtils.getUserName()
         }else{
             Glide.with(context).load(R.drawable.icon_default_head).animate(R.anim.circle_s2b).into(headimage)
@@ -117,12 +127,43 @@ class MainActivity : MBaseActivity(), NavigationView.OnNavigationItemSelectedLis
         return true
     }
 
+    fun shareApp(){
+        var image : UMImage = UMImage(context,R.mipmap.icon_logo)
+        val displaylist = arrayOf(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+        ShareAction(this)
+                .setDisplayList(*displaylist)
+                .withText("呵呵").withTitle("title")
+                .withTargetUrl("http://www.baidu.com")
+                .withMedia(image)
+                .setListenerList(umShareListener).open()
+
+    }
+
+    var umShareListener = object : UMShareListener {
+        override fun onResult(platform: SHARE_MEDIA) {
+            Toast.makeText(context, platform.toString()+ " 分享成功啦", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onError(platform: SHARE_MEDIA, t: Throwable) {
+            Toast.makeText(context, platform.toString()+ " 分享失败啦", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onCancel(platform: SHARE_MEDIA) {
+            Toast.makeText(context, platform.toString() + " 分享取消了", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val id = item.itemId
         when(id){
-
+            R.id.favorite ->{
+                startActivity(Act_Favorite::class.java)
+            }
+            R.id.nav_share ->{
+                shareApp()
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
@@ -169,5 +210,10 @@ class MainActivity : MBaseActivity(), NavigationView.OnNavigationItemSelectedLis
         viewpager.adapter = Adapter_article_pager(supportFragmentManager,types)
         viewpager.offscreenPageLimit = 4
         tablayout.setupWithViewPager(viewpager)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 }

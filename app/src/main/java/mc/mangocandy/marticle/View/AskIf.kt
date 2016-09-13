@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import mc.mangocandy.marticle.R
+import mc.mangocandy.marticle.Utils.ZhenDong
 
 /**
  * Created by Administrator on 2016/7/25.
@@ -22,6 +23,7 @@ abstract class AskIf{
     }
 
     fun show(){
+        ZhenDong.zhendong(context,100)
         var view = LayoutInflater.from(context).inflate(R.layout.dialog_view,null)
         var alertDialog : AlertDialog.Builder = AlertDialog.Builder(context!!)
                 .setMessage(message)

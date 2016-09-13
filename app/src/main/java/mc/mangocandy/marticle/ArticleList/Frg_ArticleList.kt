@@ -51,8 +51,9 @@ class Frg_ArticleList : MBaseFragment(){
         refreshLayout.MsetCanLoad(true)
         refreshLayout.MsetOnRefreshListener(object : MRefreshLayout.OnRefreshListener(){
             override fun onRefresh() {
-                currentPage == 1
+                currentPage = 1
                 articleList.clear()
+                adapter.notifyDataSetChanged()
                 askArticleList()
             }
 
