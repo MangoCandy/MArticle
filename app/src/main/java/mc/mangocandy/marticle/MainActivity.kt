@@ -19,6 +19,7 @@ import com.avos.avoscloud.AVUser
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.tencent.mm.sdk.modelmsg.WXTextObject
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.UMShareListener
@@ -128,14 +129,16 @@ class MainActivity : MBaseActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
     fun shareApp(){
-        var image : UMImage = UMImage(context,R.mipmap.icon_logo)
+
+        var image : UMImage = UMImage(context,R.drawable.icon_logo)
         val displaylist = arrayOf(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
         ShareAction(this)
                 .setDisplayList(*displaylist)
                 .withText("呵呵").withTitle("title")
-                .withTargetUrl("http://www.baidu.com")
+                .withTargetUrl("")
                 .withMedia(image)
-                .setListenerList(umShareListener).open()
+                .setListenerList(umShareListener)
+                .open()
 
     }
 

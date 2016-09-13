@@ -16,7 +16,7 @@ class MApplication:Application(){
     override fun onCreate() {
         super.onCreate()
         //微信 appid appsecret
-        PlatformConfig.setWeixin("wx75297ed685ae62c0", "92591a54597bac3839e17463df391e8d")
+        PlatformConfig.setWeixin("wx75297ed685ae62c0", "1a3bc91abf6dd2bebf1694d03eb87dff")
 
         QbSdk.setDownloadWithoutWifi(true)
         QbSdk.preInit(this)

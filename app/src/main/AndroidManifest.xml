@@ -42,10 +42,13 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:theme="@style/Theme.UMDefault"
+            android:excludeFromRecents="true"/>
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="57d794dae0f55a8632000516"></meta-data>
+            android:value="57d794dae0f55a8632000516"/>
 
         <activity
             android:name=".MainActivity"
